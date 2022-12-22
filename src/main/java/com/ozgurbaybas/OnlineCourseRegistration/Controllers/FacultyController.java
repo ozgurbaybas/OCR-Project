@@ -30,4 +30,10 @@ public class FacultyController {
     public ResponseEntity<?> listFaculties() {
         return ResponseEntity.ok(facultyService.listFaculties());
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{facultyId}")
+    public ResponseEntity<?> updateFaculty(@PathVariable Long facultyId, @Valid @RequestBody FacultyRequest facultyRequest) {
+        return ResponseEntity.ok(facultyService.updateFaculty(facultyId, facultyRequest));
+    }
 }

@@ -29,4 +29,12 @@ public class FacultyServiceImpl implements FacultyService{
         List<Faculty> faculties = facultyRepository.findAllByIsActive(true);
         return faculties.stream().map(faculty -> new FacultyResponse(faculty.getId(), faculty.getName())).collect(Collectors.toList());
     }
+
+    @Override
+    public FacultyResponse updateFaculty(Long facultyId, FacultyRequest facultyRequest) {
+        Faculty faculty = facultyRepository.getById(facultyId);
+        faculty.setName(facultyRequest.getName());
+        facultyRepository.save(faculty);
+        return new FacultyResponse(faculty.getId(), faculty.getName());
+    }
 }
