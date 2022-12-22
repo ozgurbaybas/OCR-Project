@@ -1,5 +1,6 @@
 package com.ozgurbaybas.OnlineCourseRegistration.Controllers;
 
+import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.FacultyDeanAssignmentRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.FacultyRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Services.FacultyService;
 import org.springframework.http.ResponseEntity;
@@ -35,5 +36,12 @@ public class FacultyController {
     @PutMapping("/{facultyId}")
     public ResponseEntity<?> updateFaculty(@PathVariable Long facultyId, @Valid @RequestBody FacultyRequest facultyRequest) {
         return ResponseEntity.ok(facultyService.updateFaculty(facultyId, facultyRequest));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{facultyId}/assignDean")
+    public ResponseEntity<?> assignDean(@PathVariable Long facultyId,
+                                        @Valid @RequestBody FacultyDeanAssignmentRequest facultyDeanAssignmentRequest) {
+        return ResponseEntity.ok(facultyService.assignDeanToFaculty(facultyId, facultyDeanAssignmentRequest));
     }
 }

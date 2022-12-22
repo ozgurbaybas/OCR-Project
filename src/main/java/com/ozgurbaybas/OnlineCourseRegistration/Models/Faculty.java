@@ -1,8 +1,6 @@
 package com.ozgurbaybas.OnlineCourseRegistration.Models;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -17,6 +15,11 @@ public class Faculty extends BaseModel {
     @NotBlank
     @Size(max = 50)
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name="dean_id")
+    private User dean;
+
 
     public Faculty() {
     }
@@ -34,4 +37,11 @@ public class Faculty extends BaseModel {
         this.name = name;
     }
 
+    public User getDean() {
+        return dean;
+    }
+
+    public void setDean(User dean) {
+        this.dean = dean;
+    }
 }
