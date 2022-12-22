@@ -3,9 +3,9 @@ package com.ozgurbaybas.OnlineCourseRegistration.Models;
 public enum EnumRole {
     ROLE_USER("user"),
     ROLE_ADMIN("admin"),
-    ROLE_DEAN("admin"),
-    ROLE_INSTRUCTOR("Instructor"),
-    ROLE_STUDENT("Student");
+    ROLE_DEAN("dean"),
+    ROLE_INSTRUCTOR("instructor"),
+    ROLE_STUDENT("student");
 
     public final String roleName;
 
