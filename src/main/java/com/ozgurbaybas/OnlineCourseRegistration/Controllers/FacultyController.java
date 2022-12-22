@@ -24,4 +24,10 @@ public class FacultyController {
     public ResponseEntity<?> addFaculty(@Valid @RequestBody FacultyRequest facultyRequest) {
         return ResponseEntity.ok(facultyService.addFaculty(facultyRequest));
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/")
+    public ResponseEntity<?> listFaculties() {
+        return ResponseEntity.ok(facultyService.listFaculties());
+    }
 }
