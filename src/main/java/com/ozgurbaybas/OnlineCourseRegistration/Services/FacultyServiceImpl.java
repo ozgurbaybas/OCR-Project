@@ -12,10 +12,12 @@ import com.ozgurbaybas.OnlineCourseRegistration.Repository.RoleRepository;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class FacultyServiceImpl implements FacultyService{
 
     final FacultyRepository facultyRepository;
@@ -61,5 +63,12 @@ public class FacultyServiceImpl implements FacultyService{
         userRepository.save(deanUser);
 
         return new FacultyResponse(faculty);
+    }
+
+    @Override
+    public Void deleteFacultyById(Long facultyId) {
+        Faculty faculty = facultyRepository.getReferenceById(facultyId);
+        facultyRepository.deleteById(facultyId);
+        return null;
     }
 }

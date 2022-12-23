@@ -44,4 +44,11 @@ public class FacultyController {
                                         @Valid @RequestBody FacultyDeanAssignmentRequest facultyDeanAssignmentRequest) {
         return ResponseEntity.ok(facultyService.assignDeanToFaculty(facultyId, facultyDeanAssignmentRequest));
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{facultyId}")
+    public ResponseEntity<?> deleteFacultyById(@PathVariable Long facultyId) {
+        return ResponseEntity.ok(facultyService.deleteFacultyById(facultyId));
+    }
+
 }

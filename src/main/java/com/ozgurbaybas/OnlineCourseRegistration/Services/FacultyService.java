@@ -11,4 +11,5 @@ public interface FacultyService {
     List<FacultyResponse> listFaculties();
     FacultyResponse updateFaculty(Long facultyId, FacultyRequest facultyRequest);
     FacultyResponse assignDeanToFaculty(Long facultyId, FacultyDeanAssignmentRequest facultyDeanAssignmentRequest);
+    Void deleteFacultyById(Long facultyId);
 }
