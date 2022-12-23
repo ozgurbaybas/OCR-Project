@@ -3,34 +3,29 @@ package com.ozgurbaybas.OnlineCourseRegistration.Models;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Set;
-
 
 @Entity
-@Table(	name = "faculties",
+@Table(	name = "departments",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "name")
         })
-public class Faculty extends BaseModel {
+public class Department extends BaseModel {
 
     @NotBlank
     @Size(max = 50)
     private String name;
 
     @ManyToOne
-    @JoinColumn(name="dean_id")
-    private User dean;
+    @JoinColumn(name="faculty_id", nullable = false)
+    private Faculty faculty;
 
-    @OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL)
-    private Set<Department> departments;
-
-
-    public Faculty() {
+    public Department() {
     }
 
-    public Faculty(String name) {
+    public Department(String name, Faculty faculty) {
         super();
         this.name = name;
+        this.faculty = faculty;
     }
 
     public String getName() {
@@ -41,11 +36,11 @@ public class Faculty extends BaseModel {
         this.name = name;
     }
 
-    public User getDean() {
-        return dean;
+    public Faculty getFaculty() {
+        return faculty;
     }
 
-    public void setDean(User dean) {
-        this.dean = dean;
+    public void setFaculty(User dean) {
+        this.faculty = faculty;
     }
 }
