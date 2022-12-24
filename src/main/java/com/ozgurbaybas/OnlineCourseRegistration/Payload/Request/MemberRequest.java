@@ -2,22 +2,13 @@ package com.ozgurbaybas.OnlineCourseRegistration.Payload.Request;
 
 public class MemberRequest {
 
-    private Long FacultyId;
-    private Long DepartmentId;
+    private Long MemberId;
 
-    public Long getDepartmentId() {
-        return DepartmentId;
+    public Long getMemberId() {
+        return MemberId;
     }
 
-    public void setDepartmentId(Long departmentId) {
-        DepartmentId = departmentId;
-    }
-
-    public Long getFacultyId() {
-        return FacultyId;
-    }
-
-    public void setFacultyId(Long facultyId) {
-        FacultyId = facultyId;
+    public void setMemberId(Long memberId) {
+        MemberId = memberId;
     }
 }

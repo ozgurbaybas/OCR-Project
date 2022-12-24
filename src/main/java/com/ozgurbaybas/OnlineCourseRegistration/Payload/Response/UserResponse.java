@@ -21,8 +21,8 @@ public class UserResponse {
         this.username = user.getUsername();
         this.email = user.getEmail();
         this.roles = user.getRoles().stream().map(role -> role.getName().getRoleName()).collect(Collectors.toList());
-        this.facultyId = user.getFaculty().getId();
-        this.departmentId = user.getDepartment().getId();
+        this.facultyId = user.getFaculty() != null ? user.getFaculty().getId() : null;
+        this.departmentId = user.getDepartment() != null ? user.getDepartment().getId() : null;
     }
 
     public Long getId() {

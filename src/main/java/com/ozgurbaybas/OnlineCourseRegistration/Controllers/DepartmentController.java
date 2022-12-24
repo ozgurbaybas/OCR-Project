@@ -1,6 +1,7 @@
 package com.ozgurbaybas.OnlineCourseRegistration.Controllers;
 
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.DepartmentRequest;
+import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.MemberRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Services.DepartmentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -47,5 +48,11 @@ public class DepartmentController {
     @DeleteMapping("/{departmentId}")
     public ResponseEntity<?> deleteDepartmentById(@PathVariable Long departmentId) {
         return ResponseEntity.ok(departmentService.deleteDepartmentById(departmentId));
+    }
+
+    @PreAuthorize("hasRole('ADMIN') or hasRole('DEAN')")
+    @PutMapping("/{departmentId}/add_instructor")
+    public ResponseEntity<?> addInstructorToDepartment(@PathVariable Long departmentId, @Valid @RequestBody MemberRequest memberRequest) {
+        return ResponseEntity.ok(departmentService.addInstructorToDepartment(departmentId, memberRequest));
     }
 }

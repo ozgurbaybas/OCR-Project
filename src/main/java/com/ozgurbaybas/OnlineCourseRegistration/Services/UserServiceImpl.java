@@ -18,58 +18,16 @@ public class UserServiceImpl implements UserService{
 
     final UserRepository userRepository;
     final RoleRepository roleRepository;
-    final FacultyRepository facultyRepository;
-    final DepartmentRepository departmentRepository;
 
-    public UserServiceImpl(FacultyRepository facultyRepository, UserRepository userRepository, RoleRepository roleRepository, DepartmentRepository departmentRepository) {
-        this.facultyRepository = facultyRepository;
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-        this.departmentRepository = departmentRepository;
     }
 
     @Override
     public List<UserResponse> listUsers() {
         List<User> users = userRepository.findAll();
         return users.stream().map(UserResponse::new).collect(Collectors.toList());
-    }
-
-    @Override
-    public UserResponse addInstructorToFaculty(Long memberId, MemberRequest memberRequest) {
-
-        User instructor = userRepository.getReferenceById(memberId);
-        Faculty faculty = facultyRepository.getReferenceById(memberRequest.getFacultyId());
-        instructor.setFaculty(faculty);
-        instructor = userRepository.save(instructor);
-
-        Role instructorRole = roleRepository.findByName(EnumRole.ROLE_INSTRUCTOR).orElseThrow(() -> new RuntimeException("Role is not found."));
-        instructor.getRoles().add(instructorRole);
-        userRepository.save(instructor);
-
-        return new UserResponse(instructor);
-    }
-
-    public UserResponse removeInstructorFromFaculty(Long memberId) {
-
-        User instructor = userRepository.getReferenceById(memberId);
-        instructor.setFaculty(null);
-        instructor = userRepository.save(instructor);
-        return  new UserResponse(instructor);
-    }
-
-    @Override
-    public UserResponse addInstructorToDepartment(Long memberId, DepartmentMemberRequest departmentMemberRequest) {
-
-        User instructor = userRepository.getReferenceById(memberId);
-        Department department = departmentRepository.getReferenceById(departmentMemberRequest.getDepartmentId());
-        instructor.setDepartment(department);
-        instructor = userRepository.save(instructor);
-
-        Role instructorRole = roleRepository.findByName(EnumRole.ROLE_INSTRUCTOR).orElseThrow(() -> new RuntimeException("Role is not found."));
-        instructor.getRoles().add(instructorRole);
-        userRepository.save(instructor);
-
-        return new UserResponse(instructor);
     }
 
 }

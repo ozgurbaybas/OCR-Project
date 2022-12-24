@@ -2,6 +2,7 @@ package com.ozgurbaybas.OnlineCourseRegistration.Controllers;
 
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.FacultyDeanAssignmentRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.FacultyRequest;
+import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.MemberRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Services.FacultyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -51,4 +52,15 @@ public class FacultyController {
         return ResponseEntity.ok(facultyService.deleteFacultyById(facultyId));
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('DEAN')")
+    @PutMapping("/{facultyId}/add_instructor")
+    public ResponseEntity<?> addInstructorToFaculty(@PathVariable Long facultyId, @Valid @RequestBody MemberRequest memberRequest) {
+        return ResponseEntity.ok(facultyService.addInstructorToFaculty(facultyId, memberRequest));
+    }
+
+    @PreAuthorize("hasRole('ADMIN') or hasRole('DEAN')")
+    @PutMapping("/{facultyId}/remove_instructor")
+    public ResponseEntity<?> removeInstructorFromFaculty(@Valid @RequestBody MemberRequest memberRequest) {
+        return ResponseEntity.ok(facultyService.removeInstructorFromFaculty(memberRequest));
+    }
 }

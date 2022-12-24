@@ -8,7 +8,4 @@ import java.util.List;
 
 public interface UserService {
     List<UserResponse> listUsers();
-    UserResponse addInstructorToFaculty(Long memberId, MemberRequest memberRequest);
-    UserResponse removeInstructorFromFaculty(Long memberId);
-    UserResponse addInstructorToDepartment(Long memberId, DepartmentMemberRequest departmentMemberRequest);
 }

@@ -26,24 +26,4 @@ public class UserController {
         return ResponseEntity.ok(userService.listUsers());
     }
 
-    @PreAuthorize("hasRole('ADMIN') or hasRole('DEAN')")
-    @PutMapping("/{memberId}/add_faculty")
-    public ResponseEntity<?> addInstructorToFaculty(@PathVariable Long memberId, @Valid @RequestBody MemberRequest memberRequest) {
-        return ResponseEntity.ok(userService.addInstructorToFaculty(memberId, memberRequest));
-    }
-
-    @PreAuthorize("hasRole('ADMIN') or hasRole('DEAN')")
-    @PutMapping("/{memberId}/add_department")
-    public ResponseEntity<?> addInstructorToDepartment(@PathVariable Long memberId, @Valid @RequestBody DepartmentMemberRequest departmentMemberRequest) {
-        return ResponseEntity.ok(userService.addInstructorToDepartment(memberId, departmentMemberRequest));
-    }
-
-    @PreAuthorize("hasRole('ADMIN') or hasRole('DEAN')")
-    @PutMapping("/{memberId}/remove_faculty")
-    public ResponseEntity<?> removeInstructorFromFaculty(@PathVariable Long memberId) {
-        return ResponseEntity.ok(userService.removeInstructorFromFaculty(memberId));
-    }
-
-
-
 }

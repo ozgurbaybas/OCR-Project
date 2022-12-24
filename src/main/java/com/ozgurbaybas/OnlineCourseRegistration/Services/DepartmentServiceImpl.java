@@ -1,9 +1,10 @@
 package com.ozgurbaybas.OnlineCourseRegistration.Services;
 
-import com.ozgurbaybas.OnlineCourseRegistration.Models.Department;
-import com.ozgurbaybas.OnlineCourseRegistration.Models.Faculty;
+import com.ozgurbaybas.OnlineCourseRegistration.Models.*;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.DepartmentRequest;
+import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.MemberRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.DepartmentResponse;
+import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.UserResponse;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.DepartmentRepository;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.FacultyRepository;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.RoleRepository;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -64,5 +66,26 @@ public class DepartmentServiceImpl implements DepartmentService {
         Department department = departmentRepository.getById(departmentId);
         departmentRepository.deleteById(departmentId);
         return null;
+    }
+
+    @Override
+    public UserResponse addInstructorToDepartment(Long departmentId, MemberRequest memberRequest) {
+
+        User instructor = userRepository.getById(memberRequest.getMemberId());
+        Department department = departmentRepository.getById(departmentId);
+        Long facultyId = instructor.getFaculty().getId();
+        Long departmentFacultyId = department.getFaculty().getId();
+        if(Objects.equals(facultyId, departmentFacultyId)) {
+            instructor.setDepartment(department);
+            instructor = userRepository.save(instructor);
+        }
+        else throw new RuntimeException("Department not found in this faculty");
+
+        Role instructorRole = roleRepository.findByName(EnumRole.ROLE_INSTRUCTOR).orElseThrow(() -> new RuntimeException("Role is not found."));
+        instructor.getRoles().add(instructorRole);
+        userRepository.save(instructor);
+
+        return new UserResponse(instructor);
+
     }
 }
