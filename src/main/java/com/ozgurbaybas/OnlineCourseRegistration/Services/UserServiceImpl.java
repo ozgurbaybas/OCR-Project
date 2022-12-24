@@ -1,11 +1,7 @@
 package com.ozgurbaybas.OnlineCourseRegistration.Services;
 
 import com.ozgurbaybas.OnlineCourseRegistration.Models.*;
-import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.DepartmentMemberRequest;
-import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.MemberRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.UserResponse;
-import com.ozgurbaybas.OnlineCourseRegistration.Repository.DepartmentRepository;
-import com.ozgurbaybas.OnlineCourseRegistration.Repository.FacultyRepository;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.RoleRepository;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.UserRepository;
 import org.springframework.stereotype.Service;
