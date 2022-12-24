@@ -45,6 +45,20 @@ public class User {
     @JoinColumn(name="department_id")
     private Department department;
 
+    @ManyToMany
+    @JoinTable(
+            name = "students_courses",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id"))
+    Set<Course> studentsCourses;
+
+    @ManyToMany
+    @JoinTable(
+            name = "instructors_courses",
+            joinColumns = @JoinColumn(name = "instructor_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id"))
+    Set<Course> instructorsCourses;
+
     public User() {
     }
 

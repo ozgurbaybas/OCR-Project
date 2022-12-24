@@ -1,13 +1,10 @@
 package com.ozgurbaybas.OnlineCourseRegistration.Controllers;
 
-import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.DepartmentMemberRequest;
-import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.MemberRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -26,4 +23,9 @@ public class UserController {
         return ResponseEntity.ok(userService.listUsers());
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('DEAN')")
+    @GetMapping("/faculty={facultyId}")
+    public ResponseEntity<?> filterUsersWithFaculty(@PathVariable Long facultyId) {
+        return ResponseEntity.ok(userService.filterUsersWithFaculty(facultyId));
+    }
 }

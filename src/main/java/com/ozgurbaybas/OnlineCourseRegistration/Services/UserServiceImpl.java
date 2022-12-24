@@ -30,4 +30,10 @@ public class UserServiceImpl implements UserService{
         return users.stream().map(UserResponse::new).collect(Collectors.toList());
     }
 
+    @Override
+    public List<UserResponse> filterUsersWithFaculty(Long facultyId) {
+        List<User> users = userRepository.findAllByFacultyId(facultyId);
+        return users.stream().map(UserResponse::new).collect(Collectors.toList());
+    }
+
 }

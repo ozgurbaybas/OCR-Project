@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface UserService {
     List<UserResponse> listUsers();
+    List<UserResponse> filterUsersWithFaculty(Long facultyId);
 }

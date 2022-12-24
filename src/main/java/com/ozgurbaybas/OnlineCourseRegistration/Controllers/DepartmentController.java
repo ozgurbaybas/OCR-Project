@@ -37,14 +37,14 @@ public class DepartmentController {
         return  ResponseEntity.ok(departmentService.listDepartmentsByFaculty(facultyId));
     }
 
-    @PreAuthorize("hasRole('ADMIN') or HasRole('DEAN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('DEAN')")
     @PutMapping("/{departmentId}")
     public ResponseEntity<?> updateDepartment
             (@PathVariable Long departmentId, @Valid @RequestBody DepartmentRequest departmentRequest) {
         return ResponseEntity.ok(departmentService.updateDepartment(departmentId,departmentRequest ));
     }
 
-    @PreAuthorize("hasRole('ADMIN') or HasRole('DEAN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('DEAN')")
     @DeleteMapping("/{departmentId}")
     public ResponseEntity<?> deleteDepartmentById(@PathVariable Long departmentId) {
         return ResponseEntity.ok(departmentService.deleteDepartmentById(departmentId));
