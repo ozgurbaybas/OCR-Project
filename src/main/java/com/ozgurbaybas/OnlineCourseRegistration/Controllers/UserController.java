@@ -1,5 +1,6 @@
 package com.ozgurbaybas.OnlineCourseRegistration.Controllers;
 
+import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.DepartmentMemberRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.MemberRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Services.UserService;
 import org.springframework.http.ResponseEntity;
@@ -26,19 +27,19 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ADMIN') or hasRole('DEAN')")
-    @PutMapping("/{memberId}")
+    @PutMapping("/{memberId}/add_faculty")
     public ResponseEntity<?> addInstructorToFaculty(@PathVariable Long memberId, @Valid @RequestBody MemberRequest memberRequest) {
         return ResponseEntity.ok(userService.addInstructorToFaculty(memberId, memberRequest));
     }
 
     @PreAuthorize("hasRole('ADMIN') or hasRole('DEAN')")
-    @PutMapping("/{memberId}")
-    public ResponseEntity<?> addInstructorToDepartment(@PathVariable Long memberId, @Valid @RequestBody MemberRequest memberRequest) {
-        return ResponseEntity.ok(userService.addInstructorToDepartment(memberId, memberRequest));
+    @PutMapping("/{memberId}/add_department")
+    public ResponseEntity<?> addInstructorToDepartment(@PathVariable Long memberId, @Valid @RequestBody DepartmentMemberRequest departmentMemberRequest) {
+        return ResponseEntity.ok(userService.addInstructorToDepartment(memberId, departmentMemberRequest));
     }
 
     @PreAuthorize("hasRole('ADMIN') or hasRole('DEAN')")
-    @PutMapping("/{memberId}")
+    @PutMapping("/{memberId}/remove_faculty")
     public ResponseEntity<?> removeInstructorFromFaculty(@PathVariable Long memberId) {
         return ResponseEntity.ok(userService.removeInstructorFromFaculty(memberId));
     }

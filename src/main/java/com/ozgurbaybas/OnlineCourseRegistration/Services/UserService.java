@@ -1,5 +1,6 @@
 package com.ozgurbaybas.OnlineCourseRegistration.Services;
 
+import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.DepartmentMemberRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.MemberRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.UserResponse;
 
@@ -9,5 +10,5 @@ public interface UserService {
     List<UserResponse> listUsers();
     UserResponse addInstructorToFaculty(Long memberId, MemberRequest memberRequest);
     UserResponse removeInstructorFromFaculty(Long memberId);
-    UserResponse addInstructorToDepartment(Long memberId, MemberRequest memberRequest);
+    UserResponse addInstructorToDepartment(Long memberId, DepartmentMemberRequest departmentMemberRequest);
 }

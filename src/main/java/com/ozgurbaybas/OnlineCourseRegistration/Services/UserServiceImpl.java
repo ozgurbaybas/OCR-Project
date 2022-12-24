@@ -1,6 +1,7 @@
 package com.ozgurbaybas.OnlineCourseRegistration.Services;
 
 import com.ozgurbaybas.OnlineCourseRegistration.Models.*;
+import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.DepartmentMemberRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.MemberRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.UserResponse;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.DepartmentRepository;
@@ -36,8 +37,8 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserResponse addInstructorToFaculty(Long memberId, MemberRequest memberRequest) {
 
-        User instructor = userRepository.getById(memberId);
-        Faculty faculty = facultyRepository.getById(memberRequest.getFacultyId());
+        User instructor = userRepository.getReferenceById(memberId);
+        Faculty faculty = facultyRepository.getReferenceById(memberRequest.getFacultyId());
         instructor.setFaculty(faculty);
         instructor = userRepository.save(instructor);
 
@@ -50,17 +51,17 @@ public class UserServiceImpl implements UserService{
 
     public UserResponse removeInstructorFromFaculty(Long memberId) {
 
-        User instructor = userRepository.getById(memberId);
+        User instructor = userRepository.getReferenceById(memberId);
         instructor.setFaculty(null);
         instructor = userRepository.save(instructor);
         return  new UserResponse(instructor);
     }
 
+    @Override
+    public UserResponse addInstructorToDepartment(Long memberId, DepartmentMemberRequest departmentMemberRequest) {
 
-    public UserResponse addInstructorToDepartment(Long memberId, MemberRequest memberRequest) {
-
-        User instructor = userRepository.getById(memberId);
-        Department department = departmentRepository.getById(memberRequest.getDepartmentId());
+        User instructor = userRepository.getReferenceById(memberId);
+        Department department = departmentRepository.getReferenceById(departmentMemberRequest.getDepartmentId());
         instructor.setDepartment(department);
         instructor = userRepository.save(instructor);
 
