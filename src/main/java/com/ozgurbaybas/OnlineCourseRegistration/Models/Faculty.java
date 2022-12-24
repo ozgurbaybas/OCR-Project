@@ -24,6 +24,8 @@ public class Faculty extends BaseModel {
     @OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL)
     private Set<Department> departments;
 
+    @OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL)
+    private Set<User> instructor;
 
     public Faculty() {
     }
