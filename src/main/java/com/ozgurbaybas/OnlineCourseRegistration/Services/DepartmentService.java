@@ -1,7 +1,9 @@
 package com.ozgurbaybas.OnlineCourseRegistration.Services;
 
+import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.CourseAddRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.DepartmentRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.MemberRequest;
+import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.CourseResponse;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.DepartmentResponse;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.UserResponse;
 
@@ -14,4 +16,5 @@ public interface DepartmentService {
     DepartmentResponse updateDepartment(Long departmentId, DepartmentRequest departmentRequest);
     Void deleteDepartmentById(Long departmentId);
     UserResponse addInstructorToDepartment(Long departmentId, MemberRequest memberRequest);
+    CourseResponse addCourseRequest(CourseAddRequest courseAddRequest);
 }

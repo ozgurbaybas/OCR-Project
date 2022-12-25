@@ -9,6 +9,7 @@ import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.FacultyRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.MemberRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.FacultyResponse;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.UserResponse;
+import com.ozgurbaybas.OnlineCourseRegistration.Repository.CourseRepository;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.FacultyRepository;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.RoleRepository;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.UserRepository;
@@ -25,12 +26,14 @@ public class FacultyServiceImpl implements FacultyService{
     final FacultyRepository facultyRepository;
     final UserRepository userRepository;
     final RoleRepository roleRepository;
+    final CourseRepository courseRepository;
 
-    public FacultyServiceImpl(FacultyRepository facultyRepository, UserRepository userRepository, RoleRepository roleRepository)
+    public FacultyServiceImpl(FacultyRepository facultyRepository, UserRepository userRepository, RoleRepository roleRepository, CourseRepository courseRepository)
     {
         this.facultyRepository = facultyRepository;
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
+        this.courseRepository = courseRepository;
     }
 
     @Override

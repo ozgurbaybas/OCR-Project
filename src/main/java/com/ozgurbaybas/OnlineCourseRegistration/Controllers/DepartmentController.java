@@ -1,5 +1,6 @@
 package com.ozgurbaybas.OnlineCourseRegistration.Controllers;
 
+import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.CourseAddRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.DepartmentRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.MemberRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Services.DepartmentService;
@@ -54,5 +55,11 @@ public class DepartmentController {
     @PutMapping("/{departmentId}/add_instructor")
     public ResponseEntity<?> addInstructorToDepartment(@PathVariable Long departmentId, @Valid @RequestBody MemberRequest memberRequest) {
         return ResponseEntity.ok(departmentService.addInstructorToDepartment(departmentId, memberRequest));
+    }
+
+    @PreAuthorize("hasRole('ADMIN') or hasRole('DEAN') or hasRole('INSTRUCTOR')")
+    @PostMapping("/{departmentId}/add_course")
+    public ResponseEntity<?> addCourseRequest(@Valid @RequestBody CourseAddRequest courseAddRequest) {
+        return  ResponseEntity.ok(departmentService.addCourseRequest(courseAddRequest));
     }
 }

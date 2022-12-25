@@ -12,6 +12,16 @@ import java.util.Set;
         })
 public class Course extends BaseModel {
 
+    public  Course() {
+    }
+
+    public Course(String name, Department department) {
+        super();
+        this.name = name;
+        this.department = department;
+    }
+
+
     @NotBlank
     @Size(max = 60)
     private String name;
@@ -20,10 +30,12 @@ public class Course extends BaseModel {
     private Boolean isApproved = false;
 
     @ManyToOne
-    @JoinColumn(name = "faculty_id")
-    private Faculty faculty;
+    @JoinColumn(name="department_id", nullable = false)
+    private Department department;
 
-    private Long approvedOrRejectedBy;
+    @ManyToOne
+    @JoinColumn(name="approved_or_rejected_by")
+    private User approvedOrRejectedBy;
 
     @ManyToMany(mappedBy = "studentsCourses")
     private Set<User> students;
@@ -39,6 +51,14 @@ public class Course extends BaseModel {
         this.name = name;
     }
 
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
     public Boolean getApproved() {
         return isApproved;
     }
@@ -47,19 +67,11 @@ public class Course extends BaseModel {
         isApproved = approved;
     }
 
-    public Faculty getFaculty() {
-        return faculty;
-    }
-
-    public void setFaculty(Faculty faculty) {
-        this.faculty = faculty;
-    }
-
-    public Long getApprovedOrRejectedBy() {
+    public User getApprovedOrRejectedBy() {
         return approvedOrRejectedBy;
     }
 
-    public void setApprovedOrRejectedBy(Long approvedOrRejectedBy) {
+    public void setApprovedOrRejectedBy(User approvedOrRejectedBy) {
         this.approvedOrRejectedBy = approvedOrRejectedBy;
     }
 
