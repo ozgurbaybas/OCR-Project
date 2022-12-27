@@ -1,6 +1,6 @@
 package com.ozgurbaybas.OnlineCourseRegistration.Controllers;
 
-import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.CourseApproveRequest;
+import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.CourseInstructorAssignRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Services.CourseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,15 +19,9 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/request")
-    public ResponseEntity<?> listCourseRequests() {
-        return ResponseEntity.ok(courseService.listCourseRequests());
-    }
-
-    @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/request/{courseId}")
-    public  ResponseEntity<?> approveOrRejectCourse(@PathVariable Long courseId, @Valid @RequestBody CourseApproveRequest courseApproveRequest) {
-        return  ResponseEntity.ok(courseService.approveOrRejectCourse(courseId,courseApproveRequest));
+    @PreAuthorize("hasRole('ADMIN') or hasRole('DEAN')")
+    @PutMapping("/assign/{courseId}")
+    public ResponseEntity<?> assignInstructorToCourse(@PathVariable Long courseId, @Valid @RequestBody CourseInstructorAssignRequest courseInstructorAssignRequest) {
+        return ResponseEntity.ok(courseService.assignInstructorToCourse(courseId,courseInstructorAssignRequest));
     }
 }

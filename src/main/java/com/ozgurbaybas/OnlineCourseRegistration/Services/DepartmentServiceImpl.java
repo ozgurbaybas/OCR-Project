@@ -90,10 +90,12 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public CourseResponse addCourseRequest(CourseAddRequest courseAddRequest) {
-        Department department = departmentRepository.getById(courseAddRequest.getDepartmentId());
+    public CourseResponse addCourseRequest(Long departmentId, CourseAddRequest courseAddRequest) {
+        Department department = departmentRepository.getById(departmentId);
         Course newCourse = new Course(courseAddRequest.getName(), department);
         Course course = courseRepository.save(newCourse);
         return new CourseResponse(course);
     }
+
+
 }

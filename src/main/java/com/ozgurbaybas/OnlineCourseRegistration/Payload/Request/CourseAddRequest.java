@@ -1,7 +1,6 @@
 package com.ozgurbaybas.OnlineCourseRegistration.Payload.Request;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 public class CourseAddRequest {
 
@@ -14,17 +13,6 @@ public class CourseAddRequest {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @NotNull
-    private Long departmentId;
-
-    public Long getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(Long departmentId) {
-        this.departmentId = departmentId;
     }
 
 }

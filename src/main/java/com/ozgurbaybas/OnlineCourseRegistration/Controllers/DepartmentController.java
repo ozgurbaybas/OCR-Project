@@ -59,7 +59,7 @@ public class DepartmentController {
 
     @PreAuthorize("hasRole('ADMIN') or hasRole('DEAN') or hasRole('INSTRUCTOR')")
     @PostMapping("/{departmentId}/add_course")
-    public ResponseEntity<?> addCourseRequest(@Valid @RequestBody CourseAddRequest courseAddRequest) {
-        return  ResponseEntity.ok(departmentService.addCourseRequest(courseAddRequest));
+    public ResponseEntity<?> addCourseRequest(@PathVariable Long departmentId, @Valid @RequestBody CourseAddRequest courseAddRequest) {
+        return ResponseEntity.ok(departmentService.addCourseRequest(departmentId, courseAddRequest));
     }
 }

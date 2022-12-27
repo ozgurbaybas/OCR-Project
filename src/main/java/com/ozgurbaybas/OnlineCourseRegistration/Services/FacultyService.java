@@ -4,12 +4,13 @@ import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.FacultyDeanAssig
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.FacultyRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.MemberRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.FacultyResponse;
+import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.MessageResponse;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.UserResponse;
 
 import java.util.List;
 
 public interface FacultyService {
-    FacultyResponse addFaculty(FacultyRequest facultyRequest);
+    MessageResponse addFaculty(FacultyRequest facultyRequest);
     List<FacultyResponse> listFaculties();
     FacultyResponse updateFaculty(Long facultyId, FacultyRequest facultyRequest);
     FacultyResponse assignDeanToFaculty(Long facultyId, FacultyDeanAssignmentRequest facultyDeanAssignmentRequest);
