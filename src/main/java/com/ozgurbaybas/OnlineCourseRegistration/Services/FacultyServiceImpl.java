@@ -38,10 +38,10 @@ public class FacultyServiceImpl implements FacultyService{
     }
 
     @Override
-    public MessageResponse addFaculty(FacultyRequest facultyRequest) {
+    public FacultyResponse addFaculty(FacultyRequest facultyRequest) {
         Faculty faculty = facultyRepository.save(new Faculty(facultyRequest.getName()));
         String message = "Faculty Added";
-        return new MessageResponse(message);
+        return new FacultyResponse(faculty);
     }
 
     @Override

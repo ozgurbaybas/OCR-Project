@@ -3,6 +3,7 @@ package com.ozgurbaybas.OnlineCourseRegistration.Models;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -23,8 +24,19 @@ public class Semester {
     @Column(name="is_active", columnDefinition = "boolean default false")
     private Boolean isActive = false;
 
-    @ManyToMany(mappedBy = "semesterCourses")
-    private Set<Course> courses;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(	name = "semester_courses",
+            joinColumns = @JoinColumn(name = "semester_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id"))
+    private Set<Course> courses = new HashSet<>();
+
+    public Semester(String name) {
+        this.name = name;
+    }
+
+    public Semester() {
+
+    }
 
     public Long getId() {
         return id;

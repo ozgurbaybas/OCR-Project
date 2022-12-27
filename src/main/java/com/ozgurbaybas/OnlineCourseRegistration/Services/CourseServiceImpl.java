@@ -6,6 +6,7 @@ import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.CourseApproveReq
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.CourseInstructorAssignRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.CourseResponse;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.CourseRepository;
+import com.ozgurbaybas.OnlineCourseRegistration.Repository.SemesterRepository;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +21,12 @@ public class CourseServiceImpl implements CourseService{
 
     final CourseRepository courseRepository;
     final UserRepository userRepository;
+    final SemesterRepository semesterRepository;
 
-
-    public CourseServiceImpl(CourseRepository courseRepository, UserRepository userRepository) {
+    public CourseServiceImpl(CourseRepository courseRepository, UserRepository userRepository, SemesterRepository semesterRepository) {
         this.courseRepository = courseRepository;
         this.userRepository = userRepository;
+        this.semesterRepository = semesterRepository;
     }
 
 
