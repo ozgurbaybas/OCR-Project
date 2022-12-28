@@ -1,5 +1,7 @@
 package com.ozgurbaybas.OnlineCourseRegistration.Models;
 
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,36 +9,32 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.util.Set;
 
-@Getter
-@Setter
+
+@Data
+@Builder
 @Entity
 @Table(name = "schedules")
 public class Schedule {
-
-    public Schedule() {
-
-    }
-
-    public Schedule (Course course, EnumDay day, Long hour) {
-        this.name = course.getName()+"_schedule_"+day;
-        this.course = course;
-        this.day = day;
-        this.hour = hour;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 30)
-    private String name;
-
     @NotEmpty
     @ManyToOne
     @JoinColumn(name="course_id", nullable = false)
     private Course course;
+
+    @NotEmpty
+    @ManyToOne
+    @JoinColumn(name="instructor_id", nullable = false)
+    private User instructor;
+
+    @NotEmpty
+    @ManyToOne
+    @JoinColumn(name="semester_id", nullable = false)
+    private Semester semester;
 
     @NotBlank
     @Enumerated(EnumType.STRING)
@@ -46,10 +44,8 @@ public class Schedule {
     @NotEmpty
     private Long hour;
 
-    @ManyToOne
-    private User instructor;
+    public Schedule() {
 
-    @ManyToOne
-    private Semester semester;
+    }
 
 }

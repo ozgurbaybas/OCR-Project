@@ -50,16 +50,4 @@ public class CourseController {
     public ResponseEntity<?> assignInstructorsToOpenCourses (@PathVariable Long courseId, @Valid @RequestBody CourseInstructorAssignRequest courseInstructorAssignRequest) {
         return ResponseEntity.ok(courseService.assignInstructorsToOpenCourses(courseId, courseInstructorAssignRequest));
     }
-
-    @PreAuthorize("hasRole('DEAN')")
-    @PostMapping("/assign/schedule/{courseId}")
-    public ResponseEntity<?> assignScheduleToCourse (@PathVariable Long courseId , @Valid @RequestBody CourseScheduleRequest courseScheduleRequest) {
-        return ResponseEntity.ok(courseService.assignScheduleToCourse(courseId, courseScheduleRequest));
-    }
-
-    @PreAuthorize("hasRole('STUDENT')")
-    @GetMapping("/view/open_courses")
-    public ResponseEntity<?> getOpenCourseInfo () {
-        return ResponseEntity.ok(courseService.getOpenCourseInfo());
-    }
 }
