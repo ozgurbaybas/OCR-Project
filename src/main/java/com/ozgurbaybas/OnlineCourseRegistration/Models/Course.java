@@ -43,6 +43,9 @@ public class Course extends BaseModel {
     @ManyToMany(mappedBy = "instructorsCourses")
     private Set<User> instructors;
 
+    @ManyToMany(mappedBy= "semester_courses")
+    private Set<Semester> semester;
+
     public String getName() {
         return name;
     }
@@ -91,4 +94,11 @@ public class Course extends BaseModel {
         this.instructors = instructors;
     }
 
+    public Set<Semester> getSemester() {
+        return semester;
+    }
+
+    public void setSemester(Set<Semester> semester) {
+        this.semester = semester;
+    }
 }

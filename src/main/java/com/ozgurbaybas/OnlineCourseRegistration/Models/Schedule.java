@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.Set;
@@ -13,6 +14,18 @@ import java.util.Set;
 @Entity
 @Table(name = "schedules")
 public class Schedule {
+
+    public Schedule() {
+
+    }
+
+    public Schedule (Course course, String day, Set<Long> hour) {
+        this.name = course.getName()+"_schedule_"+day;
+        this.course = course;
+        this.day = day;
+        this.hour = hour;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,13 +38,11 @@ public class Schedule {
     @JoinColumn(name="course_id", nullable = false)
     private Course course;
 
+    @NotBlank
     private String day;
 
+    @NotEmpty
     @ElementCollection
     private Set<Long> hour;
-
-    public void setName() {
-        this.name = course.getName()+"_schedule";
-    }
 
 }
