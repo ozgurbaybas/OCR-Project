@@ -1,12 +1,14 @@
 package com.ozgurbaybas.OnlineCourseRegistration.Services;
 
 import com.ozgurbaybas.OnlineCourseRegistration.Models.Course;
+import com.ozgurbaybas.OnlineCourseRegistration.Models.EnumDay;
 import com.ozgurbaybas.OnlineCourseRegistration.Models.Schedule;
 import com.ozgurbaybas.OnlineCourseRegistration.Models.User;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.CourseApproveRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.CourseInstructorAssignRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.CourseScheduleRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.CourseResponse;
+import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.OpenCourseInfoResponse;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.ScheduleResponse;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.CourseRepository;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.ScheduleRepository;
@@ -81,11 +83,17 @@ public class CourseServiceImpl implements CourseService{
     @Override
     public ScheduleResponse assignScheduleToCourse(Long courseId, CourseScheduleRequest courseScheduleRequest) {
         Course course = courseRepository.getById(courseId);
-        String day = courseScheduleRequest.getDay();
-        Set<Long> hour = courseScheduleRequest.getHour();
+        EnumDay day = EnumDay.valueOf(courseScheduleRequest.getDay());
+        Long hour = courseScheduleRequest.getHour();
         Schedule schedule = new Schedule(course, day, hour);
         scheduleRepository.save(schedule);
         return new ScheduleResponse(schedule);
+    }
+
+    @Override
+    public OpenCourseInfoResponse getOpenCourseInfo() {
+        List<Course> openCourses = courseRepository.findAllBySemester_IsActive(true);
+        return new OpenCourseInfoResponse(openCourses);
     }
 
 }

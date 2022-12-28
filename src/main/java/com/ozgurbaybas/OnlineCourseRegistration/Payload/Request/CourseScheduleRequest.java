@@ -9,5 +9,5 @@ import java.util.Set;
 @Setter
 public class CourseScheduleRequest {
     private String day;
-    private Set<Long> hour;
+    private Long hour;
 }

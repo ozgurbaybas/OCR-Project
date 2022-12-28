@@ -46,6 +46,9 @@ public class Course extends BaseModel {
     @ManyToMany(mappedBy= "semester_courses")
     private Set<Semester> semester;
 
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    private Set<Schedule> schedules;
+
     public String getName() {
         return name;
     }
@@ -100,5 +103,13 @@ public class Course extends BaseModel {
 
     public void setSemester(Set<Semester> semester) {
         this.semester = semester;
+    }
+
+    public Set<Schedule> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(Set<Schedule> schedules) {
+        this.schedules = schedules;
     }
 }

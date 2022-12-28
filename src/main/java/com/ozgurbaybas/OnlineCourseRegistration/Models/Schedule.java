@@ -19,7 +19,7 @@ public class Schedule {
 
     }
 
-    public Schedule (Course course, String day, Set<Long> hour) {
+    public Schedule (Course course, EnumDay day, Long hour) {
         this.name = course.getName()+"_schedule_"+day;
         this.course = course;
         this.day = day;
@@ -39,10 +39,17 @@ public class Schedule {
     private Course course;
 
     @NotBlank
-    private String day;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 30)
+    private EnumDay day;
 
     @NotEmpty
-    @ElementCollection
-    private Set<Long> hour;
+    private Long hour;
+
+    @ManyToOne
+    private User instructor;
+
+    @ManyToOne
+    private Semester semester;
 
 }
