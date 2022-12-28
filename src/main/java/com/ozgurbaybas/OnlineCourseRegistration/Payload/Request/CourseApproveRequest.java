@@ -7,9 +7,6 @@ public class CourseApproveRequest {
     @NotNull
     private boolean approve;
 
-    @NotNull
-    private Long approvedOrRejectedById;
-
     public boolean isApprove() {
         return approve;
     }
@@ -18,11 +15,4 @@ public class CourseApproveRequest {
         this.approve = approve;
     }
 
-    public Long getApprovedOrRejectedById() {
-        return approvedOrRejectedById;
-    }
-
-    public void setApprovedOrRejectedById(Long approvedOrRejectedById) {
-        this.approvedOrRejectedById = approvedOrRejectedById;
-    }
 }

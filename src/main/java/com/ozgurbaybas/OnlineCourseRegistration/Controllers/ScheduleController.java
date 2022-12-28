@@ -25,10 +25,9 @@ public class ScheduleController {
         return ResponseEntity.ok(scheduleService.assignCourseToSchedule(scheduleRequest));
     }
 
-    @PreAuthorize("hasRole('STUDENT')")
+    @PreAuthorize("hasRole('STUDENT') or hasRole('USER')")
     @GetMapping("/users/{studentId}/open_courses")
     public ResponseEntity<?> getOpenCourses (@PathVariable Long studentId) {
         return ResponseEntity.ok(scheduleService.getOpenCourses(studentId));
     }
-
 }

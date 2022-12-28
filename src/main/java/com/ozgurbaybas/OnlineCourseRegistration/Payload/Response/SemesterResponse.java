@@ -1,11 +1,10 @@
 package com.ozgurbaybas.OnlineCourseRegistration.Payload.Response;
 
-import com.ozgurbaybas.OnlineCourseRegistration.Models.Course;
 import com.ozgurbaybas.OnlineCourseRegistration.Models.Semester;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,12 +15,18 @@ public class SemesterResponse {
 
     private Boolean isActive;
 
-    private Set<Course> courses;
+    private List<CourseResponse> courseList;
+
+    public SemesterResponse(Semester semester, List<CourseResponse> courseResponseList) {
+        this.id = semester.getId();
+        this.name = semester.getName();
+        this.isActive = semester.getIsActive();
+        this.courseList = courseResponseList;
+    }
 
     public SemesterResponse(Semester semester) {
         this.id = semester.getId();
         this.name = semester.getName();
-        this.isActive = semester.getActive();
-        this.courses = semester.getCourses();
+        this.isActive = semester.getIsActive();
     }
 }

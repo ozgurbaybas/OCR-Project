@@ -31,14 +31,20 @@ public class SemesterController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/activate")
-    public ResponseEntity<?> activateSemester(@Valid @RequestBody SemesterActivateRequest semesterActivateRequest) {
-        return  ResponseEntity.ok(semesterService.activateSemester(semesterActivateRequest));
+    @PutMapping("/activate/{semesterId}")
+    public ResponseEntity<?> activateSemester(@PathVariable Long semesterId, @Valid @RequestBody SemesterActivateRequest semesterActivateRequest) {
+        return  ResponseEntity.ok(semesterService.activateSemester(semesterId, semesterActivateRequest));
     }
 
     @PreAuthorize("hasRole('ADMIN') or hasRole('DEAN')")
     @PutMapping("/select_course/{semesterId}")
     public ResponseEntity<?> selectCoursesForSemester (@PathVariable Long semesterId, @Valid @RequestBody SelectedCourseRequest selectedCourseRequest) {
         return ResponseEntity.ok(semesterService.selectCoursesForSemester(semesterId, selectedCourseRequest));
+    }
+
+    @PreAuthorize("hasRole('ADMIN') or hasRole('DEAN')")
+    @GetMapping("/")
+    public ResponseEntity<?> listSemesters () {
+        return ResponseEntity.ok(semesterService.listSemesters());
     }
 }

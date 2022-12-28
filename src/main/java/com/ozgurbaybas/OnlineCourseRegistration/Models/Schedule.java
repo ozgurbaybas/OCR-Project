@@ -3,8 +3,6 @@ package com.ozgurbaybas.OnlineCourseRegistration.Models;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 
 @AllArgsConstructor
 @Data
@@ -16,32 +14,30 @@ public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @NotEmpty
+    // @NotEmpty
     @ManyToOne
     @JoinColumn(name="course_id", nullable = false)
     private Course course;
 
-    @NotEmpty
+    // @NotBlank
     @ManyToOne
     @JoinColumn(name="instructor_id", nullable = false)
     private User instructor;
 
-    @NotEmpty
+    //@NotBlank
     @ManyToOne
     @JoinColumn(name="semester_id", nullable = false)
     private Semester semester;
 
-    @NotBlank
+    //@NotEmpty
     @Enumerated(EnumType.STRING)
     @Column(length = 30)
     private EnumDay day;
 
-    @NotEmpty
+    //@NotNull
     private Long hour;
 
     public Schedule() {
 
     }
-
 }

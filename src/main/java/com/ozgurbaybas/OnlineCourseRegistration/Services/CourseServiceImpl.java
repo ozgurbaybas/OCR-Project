@@ -5,13 +5,18 @@ import com.ozgurbaybas.OnlineCourseRegistration.Models.User;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.CourseApproveRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.CourseInstructorAssignRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.CourseResponse;
+import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.InstructorResponse;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.CourseRepository;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.ScheduleRepository;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.SemesterRepository;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.UserRepository;
+import com.ozgurbaybas.OnlineCourseRegistration.Security.Services.UserDetailsImpl;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -41,38 +46,48 @@ public class CourseServiceImpl implements CourseService{
 
     @Override
     public CourseResponse approveOrRejectCourse(Long courseId, CourseApproveRequest courseApproveRequest) {
-        User admin = userRepository.getById(courseApproveRequest.getApprovedOrRejectedById());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long adminId = ((UserDetailsImpl) authentication.getPrincipal()).getId();
+        User admin = userRepository.getById(adminId);
         Course course = courseRepository.getById(courseId);
         course.setApprovedOrRejectedBy(admin);
-        course.setApproved(courseApproveRequest.isApprove());
+        course.setIsApproved(courseApproveRequest.isApprove());
         courseRepository.save(course);
         return new CourseResponse(course);
     }
 
     @Override
     public CourseResponse assignInstructorToCourse(Long courseId, CourseInstructorAssignRequest courseInstructorAssignRequest) {
-        User instructor = userRepository.getById(courseInstructorAssignRequest.getInstructorId());
+        User instructor = userRepository.findById(courseInstructorAssignRequest.getInstructorId()).get();
         Course course = courseRepository.getById(courseId);
         Set<User> instructorList = course.getInstructors();
         instructorList.add(instructor);
+        InstructorResponse instructorResponse;
+        List<InstructorResponse> instructorResponseList = instructorList.stream().map(inst -> new InstructorResponse(inst.getId(), inst.getUsername())).collect(Collectors.toList());
         courseRepository.save(course);
-        return new CourseResponse(course);
+        return new CourseResponse(course, instructorResponseList);
     }
 
     @Override
     public List<CourseResponse> getOpenCourses() {
-        List<Course> openCourses = courseRepository.findAllBySemesters_IsActive(true);
+        List<Course> openCourses = courseRepository.findAllBySemesters_IsActiveOrderById(true);
         return openCourses.stream().map(CourseResponse::new).collect(Collectors.toList());
     }
 
     @Override
     public CourseResponse assignInstructorsToOpenCourses(Long courseId, CourseInstructorAssignRequest courseInstructorAssignRequest) {
-        User instructor = userRepository.getById(courseInstructorAssignRequest.getInstructorId());
+        User instructor = userRepository.findById(courseInstructorAssignRequest.getInstructorId()).get();
         Course course = courseRepository.getById(courseId);
         Set<User> instructorList = course.getInstructors();
         instructorList.add(instructor);
+        InstructorResponse instructorResponse;
+        List<InstructorResponse> instructorResponseList = new ArrayList<>();
+        for (User inst : instructorList) {
+            instructorResponse = new InstructorResponse(inst.getId(), inst.getUsername());
+            instructorResponseList.add(instructorResponse);
+        }
         courseRepository.save(course);
-        return new CourseResponse(course);
+        return new CourseResponse(course, instructorResponseList);
     }
 
 }

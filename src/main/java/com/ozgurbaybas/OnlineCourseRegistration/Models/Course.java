@@ -1,16 +1,22 @@
 package com.ozgurbaybas.OnlineCourseRegistration.Models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 import java.util.Set;
 
+@Getter
+@Setter
 @Entity
 @Table(	name = "courses",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "name")
         })
-public class Course extends BaseModel {
+public class Course extends BaseModel implements Comparable<Course>{
 
     public  Course() {
     }
@@ -20,7 +26,6 @@ public class Course extends BaseModel {
         this.name = name;
         this.department = department;
     }
-
 
     @NotBlank
     @Size(max = 60)
@@ -49,67 +54,21 @@ public class Course extends BaseModel {
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private Set<Schedule> schedules;
 
-    public String getName() {
-        return name;
+    @Override
+    public int compareTo(Course course) {
+        return this.getId().compareTo(course.getId());
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return Objects.equals(name, course.name) && Objects.equals(isApproved, course.isApproved) && Objects.equals(department, course.department);
     }
 
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-
-    public Boolean getApproved() {
-        return isApproved;
-    }
-
-    public void setApproved(Boolean approved) {
-        isApproved = approved;
-    }
-
-    public User getApprovedOrRejectedBy() {
-        return approvedOrRejectedBy;
-    }
-
-    public void setApprovedOrRejectedBy(User approvedOrRejectedBy) {
-        this.approvedOrRejectedBy = approvedOrRejectedBy;
-    }
-
-    public Set<User> getStudents() {
-        return students;
-    }
-
-    public void setStudents(Set<User> students) {
-        this.students = students;
-    }
-
-    public Set<User> getInstructors() {
-        return instructors;
-    }
-
-    public void setInstructors(Set<User> instructors) {
-        this.instructors = instructors;
-    }
-
-    public Set<Semester> getSemesters() {
-        return semesters;
-    }
-
-    public void setSemesters(Set<Semester> semesters) {
-        this.semesters = semesters;
-    }
-
-    public Set<Schedule> getSchedules() {
-        return schedules;
-    }
-
-    public void setSchedules(Set<Schedule> schedules) {
-        this.schedules = schedules;
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, isApproved, department);
     }
 }

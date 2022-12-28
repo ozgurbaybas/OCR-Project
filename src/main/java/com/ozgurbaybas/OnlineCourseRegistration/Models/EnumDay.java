@@ -9,13 +9,13 @@ public enum EnumDay {
 
     public final String dayName;
 
-    EnumDay(String day) {
-        this.dayName = day;
+    EnumDay(String name) {
+        this.dayName = name;
     }
 
-    public static EnumDay getDay(String day) {
+    public static EnumDay getDay(String name) {
         for (EnumDay enumDay : EnumDay.values()) {
-            if (enumDay.dayName.equals(day)) {
+            if (enumDay.dayName.equals(name)) {
                 return enumDay;
             }
         }

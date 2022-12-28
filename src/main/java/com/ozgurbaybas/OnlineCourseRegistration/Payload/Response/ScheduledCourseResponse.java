@@ -2,14 +2,13 @@ package com.ozgurbaybas.OnlineCourseRegistration.Payload.Response;
 
 import com.ozgurbaybas.OnlineCourseRegistration.Models.Course;
 import com.ozgurbaybas.OnlineCourseRegistration.Models.Schedule;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.Data;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
-@Builder
+
+@Data
 public class ScheduledCourseResponse {
 
     private Long courseId;
