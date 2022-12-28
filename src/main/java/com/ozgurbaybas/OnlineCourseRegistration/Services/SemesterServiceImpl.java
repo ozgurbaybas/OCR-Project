@@ -42,6 +42,6 @@ public class SemesterServiceImpl implements SemesterService{
         Semester semester = semesterRepository.getById(semesterActivateRequest.getId());
         semester.setActive(semesterActivateRequest.getActive());
         semester = semesterRepository.save(semester);
-        return  new SemesterResponse(semester);
+        return new SemesterResponse(semester);
     }
 }

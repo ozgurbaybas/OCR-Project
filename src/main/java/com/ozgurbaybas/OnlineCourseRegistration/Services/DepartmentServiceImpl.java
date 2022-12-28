@@ -97,5 +97,19 @@ public class DepartmentServiceImpl implements DepartmentService {
         return new CourseResponse(course);
     }
 
+    @Override
+    public UserResponse addStudentToDepartment(Long departmentId, MemberRequest memberRequest) {
+        User student = userRepository.getById(memberRequest.getMemberId());
+        Department department = departmentRepository.getById(departmentId);
+        Faculty faculty = department.getFaculty();
+        student.setDepartment(department);
+        student.setFaculty(faculty);
+        student = userRepository.save(student);
+        Role studentRole = roleRepository.findByName(EnumRole.ROLE_STUDENT).orElseThrow(() -> new RuntimeException("Role is not found."));
+        student.getRoles().add(studentRole);
+        userRepository.save(student);
+        return new UserResponse(student);
+    }
+
 
 }

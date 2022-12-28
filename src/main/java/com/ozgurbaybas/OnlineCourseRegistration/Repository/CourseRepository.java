@@ -18,7 +18,8 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     @Query(value = "SELECT item FROM Course item WHERE item.id IN (:courseIds) ")
     Set<Course> getSelectedCourses(@Param("courseIds") List<Long> courseIds);
 
-    List<Course> findAllBySemester_IsActive(boolean isActive);
+    List<Course> findAllBySemesters_IsActive(boolean isActive);
+
 
     Course getById(Long courseId);
     Course save(Course newCourse);

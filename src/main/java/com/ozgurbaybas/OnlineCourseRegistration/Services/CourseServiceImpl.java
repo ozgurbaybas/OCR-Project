@@ -61,7 +61,7 @@ public class CourseServiceImpl implements CourseService{
 
     @Override
     public List<CourseResponse> getOpenCourses() {
-        List<Course> openCourses = courseRepository.findAllBySemester_IsActive(true);
+        List<Course> openCourses = courseRepository.findAllBySemesters_IsActive(true);
         return openCourses.stream().map(CourseResponse::new).collect(Collectors.toList());
     }
 

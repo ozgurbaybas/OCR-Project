@@ -62,4 +62,11 @@ public class DepartmentController {
     public ResponseEntity<?> addCourseRequest(@PathVariable Long departmentId, @Valid @RequestBody CourseAddRequest courseAddRequest) {
         return ResponseEntity.ok(departmentService.addCourseRequest(departmentId, courseAddRequest));
     }
+
+    @PreAuthorize("hasRole('ADMIN') or hasRole('DEAN')")
+    @PutMapping("/{departmentId}/add_student")
+    public ResponseEntity<?> addStudent
+            (@PathVariable Long departmentId, @Valid @RequestBody MemberRequest memberRequest) {
+        return ResponseEntity.ok(departmentService.addStudentToDepartment(departmentId, memberRequest ));
+    }
 }

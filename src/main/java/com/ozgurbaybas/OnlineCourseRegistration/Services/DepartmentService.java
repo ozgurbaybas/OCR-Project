@@ -17,5 +17,6 @@ public interface DepartmentService {
     Void deleteDepartmentById(Long departmentId);
     UserResponse addInstructorToDepartment(Long departmentId, MemberRequest memberRequest);
     CourseResponse addCourseRequest(Long departmentId, CourseAddRequest courseAddRequest);
+    UserResponse addStudentToDepartment(Long departmentId, MemberRequest memberRequest);
 
 }

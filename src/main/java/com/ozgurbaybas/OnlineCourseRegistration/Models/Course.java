@@ -43,8 +43,8 @@ public class Course extends BaseModel {
     @ManyToMany(mappedBy = "instructorsCourses")
     private Set<User> instructors;
 
-    @ManyToMany(mappedBy= "semester_courses")
-    private Set<Semester> semester;
+    @ManyToMany(mappedBy= "courses")
+    private Set<Semester> semesters;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private Set<Schedule> schedules;
@@ -97,12 +97,12 @@ public class Course extends BaseModel {
         this.instructors = instructors;
     }
 
-    public Set<Semester> getSemester() {
-        return semester;
+    public Set<Semester> getSemesters() {
+        return semesters;
     }
 
-    public void setSemester(Set<Semester> semester) {
-        this.semester = semester;
+    public void setSemesters(Set<Semester> semesters) {
+        this.semesters = semesters;
     }
 
     public Set<Schedule> getSchedules() {
