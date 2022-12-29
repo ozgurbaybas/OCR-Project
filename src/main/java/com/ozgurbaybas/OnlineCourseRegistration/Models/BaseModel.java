@@ -3,7 +3,6 @@ package com.ozgurbaybas.OnlineCourseRegistration.Models;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-
 @MappedSuperclass
 public abstract class BaseModel {
     @Id

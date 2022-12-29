@@ -11,8 +11,4 @@ public class InstructorResponse {
     private Long id;
     private String name;
 
-//    public InstructorResponse(User user) {
-//        this.id = user.getId();
-//        this.name = user.getUsername();
-//    }
 }

@@ -2,7 +2,6 @@ package com.ozgurbaybas.OnlineCourseRegistration.Controllers;
 
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.CourseApproveRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.CourseInstructorAssignRequest;
-import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.CourseScheduleRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Services.CourseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

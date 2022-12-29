@@ -10,15 +10,11 @@ import java.util.List;
 public interface CourseService {
 
     List<CourseResponse> listCourseRequests();
-
     CourseResponse approveOrRejectCourse(Long courseId, CourseApproveRequest courseApproveRequest);
-
     CourseResponse assignInstructorToCourse(Long courseId, CourseInstructorAssignRequest courseInstructorAssignRequest);
-
     List<CourseResponse> getOpenCourses();
-
     CourseResponse assignInstructorsToOpenCourses(Long courseId, CourseInstructorAssignRequest courseInstructorAssignRequest);
     CourseStudentInfo getCourseStudentInfo(Long courseId);
-
     CourseStudentInfo getCourseStudentInfoForInstructor(Long courseId);
+
 }

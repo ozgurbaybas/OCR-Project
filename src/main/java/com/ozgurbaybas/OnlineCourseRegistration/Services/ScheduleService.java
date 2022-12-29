@@ -1,6 +1,5 @@
 package com.ozgurbaybas.OnlineCourseRegistration.Services;
 
-
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.ScheduleRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.MessageResponse;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.ScheduleResponse;

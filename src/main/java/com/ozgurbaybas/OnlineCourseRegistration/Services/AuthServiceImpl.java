@@ -28,13 +28,9 @@ import java.util.stream.Collectors;
 public class AuthServiceImpl implements AuthService{
 
     final AuthenticationManager authenticationManager;
-
     final UserRepository userRepository;
-
     final RoleRepository roleRepository;
-
     final JwtUtils jwtUtils;
-
     final PasswordEncoder encoder;
 
     public AuthServiceImpl(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, JwtUtils jwtUtils, PasswordEncoder encoder) {
@@ -95,4 +91,3 @@ public class AuthServiceImpl implements AuthService{
         userRepository.save(user);
     }
 }
-

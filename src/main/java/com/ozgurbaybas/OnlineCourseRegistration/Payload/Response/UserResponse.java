@@ -66,4 +66,3 @@ public class UserResponse {
         this.departmentId = departmentId;
     }
 }
-

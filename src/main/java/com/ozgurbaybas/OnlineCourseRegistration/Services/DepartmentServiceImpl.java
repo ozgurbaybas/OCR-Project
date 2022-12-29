@@ -110,6 +110,4 @@ public class DepartmentServiceImpl implements DepartmentService {
         userRepository.save(student);
         return new UserResponse(student);
     }
-
-
 }

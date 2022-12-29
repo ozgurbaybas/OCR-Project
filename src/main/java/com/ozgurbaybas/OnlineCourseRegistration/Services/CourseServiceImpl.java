@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class CourseServiceImpl implements CourseService{
+public class CourseServiceImpl implements CourseService {
 
     final CourseRepository courseRepository;
     final UserRepository userRepository;
@@ -38,7 +38,6 @@ public class CourseServiceImpl implements CourseService{
         this.semesterRepository = semesterRepository;
         this.scheduleRepository = scheduleRepository;
     }
-
 
     @Override
     public List<CourseResponse> listCourseRequests() {
@@ -88,7 +87,6 @@ public class CourseServiceImpl implements CourseService{
             instructorResponse = new InstructorResponse(inst.getId(), inst.getUsername());
             instructorResponseList.add(instructorResponse);
         }
-        //        List<InstructorResponse> instructorResponseList = instructorList.stream().map(inst -> new InstructorResponse(inst.getId(), inst.getUsername())).collect(Collectors.toList());
         courseRepository.save(course);
         return new CourseResponse(course, instructorResponseList);
     }
@@ -97,7 +95,7 @@ public class CourseServiceImpl implements CourseService{
     public CourseStudentInfo getCourseStudentInfo(Long courseId) {
         Course course = courseRepository.getById(courseId);
         List<UserResponse> studentList = course.getStudents().stream().map(UserResponse::new).collect(Collectors.toList());
-        return new CourseStudentInfo(course,studentList);
+        return new CourseStudentInfo(course, studentList);
     }
 
     @Override
@@ -109,8 +107,7 @@ public class CourseServiceImpl implements CourseService{
         Course course = courseRepository.getById(courseId);
         if (instructor.getInstructorsCourses().contains(course)) {
             List<UserResponse> studentList = course.getStudents().stream().map(UserResponse::new).collect(Collectors.toList());
-            return new CourseStudentInfo(course,studentList);
-        }
-        else throw new RuntimeException(course.getName()+" isimli ders bu eğitmene ait değildir.");
+            return new CourseStudentInfo(course, studentList);
+        } else throw new RuntimeException(course.getName() + " isimli ders bu eğitmene ait değildir.");
     }
 }

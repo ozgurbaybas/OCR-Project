@@ -8,7 +8,6 @@ import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.FacultyDeanAssig
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.FacultyRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.MemberRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.FacultyResponse;
-import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.MessageResponse;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.UserResponse;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.CourseRepository;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.FacultyRepository;

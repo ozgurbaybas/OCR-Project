@@ -13,4 +13,5 @@ public interface SemesterService {
     SemesterResponse addSemester(SemesterAddRequest semesterAddRequest);
     SemesterResponse activateSemester(Long semesterId, SemesterActivateRequest semesterActivateRequest);
     List<SemesterResponse> listSemesters();
+
 }
