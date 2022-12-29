@@ -14,4 +14,5 @@ public interface ScheduleService {
     ScheduledCourseResponse registerToCourse(Long courseId);
     List<ScheduledCourseResponse> getRegisteredCourses();
     MessageResponse dropCourse(Long courseId);
+    List<ScheduledCourseResponse> getInstructorsCourses();
 }

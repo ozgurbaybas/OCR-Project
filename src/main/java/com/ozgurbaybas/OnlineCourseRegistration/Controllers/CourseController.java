@@ -50,4 +50,16 @@ public class CourseController {
     public ResponseEntity<?> assignInstructorsToOpenCourses (@PathVariable Long courseId, @Valid @RequestBody CourseInstructorAssignRequest courseInstructorAssignRequest) {
         return ResponseEntity.ok(courseService.assignInstructorsToOpenCourses(courseId, courseInstructorAssignRequest));
     }
+
+    @PreAuthorize("hasRole('DEAN')")
+    @GetMapping("/open_courses/{courseId}/info")
+    public ResponseEntity<?> getCourseStudentInfo (@PathVariable Long courseId) {
+        return ResponseEntity.ok(courseService.getCourseStudentInfo(courseId));
+    }
+
+    @PreAuthorize("hasRole('INSTRUCTOR')")
+    @GetMapping("/open_courses/{courseId}/instructor_info")
+    public ResponseEntity<?> getCourseStudentInfoForInstructor (@PathVariable Long courseId) {
+        return ResponseEntity.ok(courseService.getCourseStudentInfoForInstructor(courseId));
+    }
 }

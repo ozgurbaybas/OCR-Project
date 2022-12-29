@@ -5,7 +5,9 @@ import com.ozgurbaybas.OnlineCourseRegistration.Models.User;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.CourseApproveRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.CourseInstructorAssignRequest;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.CourseResponse;
+import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.CourseStudentInfo;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.InstructorResponse;
+import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.UserResponse;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.CourseRepository;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.ScheduleRepository;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.SemesterRepository;
@@ -91,4 +93,24 @@ public class CourseServiceImpl implements CourseService{
         return new CourseResponse(course, instructorResponseList);
     }
 
+    @Override
+    public CourseStudentInfo getCourseStudentInfo(Long courseId) {
+        Course course = courseRepository.getById(courseId);
+        List<UserResponse> studentList = course.getStudents().stream().map(UserResponse::new).collect(Collectors.toList());
+        return new CourseStudentInfo(course,studentList);
+    }
+
+    @Override
+    public CourseStudentInfo getCourseStudentInfoForInstructor(Long courseId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long userId = ((UserDetailsImpl) authentication.getPrincipal()).getId();
+        User instructor = userRepository.getById(userId);
+
+        Course course = courseRepository.getById(courseId);
+        if (instructor.getInstructorsCourses().contains(course)) {
+            List<UserResponse> studentList = course.getStudents().stream().map(UserResponse::new).collect(Collectors.toList());
+            return new CourseStudentInfo(course,studentList);
+        }
+        else throw new RuntimeException(course.getName()+" isimli ders bu eğitmene ait değildir.");
+    }
 }

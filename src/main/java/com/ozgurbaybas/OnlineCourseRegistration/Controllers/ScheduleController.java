@@ -48,4 +48,10 @@ public class ScheduleController {
     public ResponseEntity<?> dropCourse (@PathVariable Long courseId) {
         return ResponseEntity.ok(scheduleService.dropCourse(courseId));
     }
+
+    @PreAuthorize("hasRole('INSTRUCTOR')")
+    @GetMapping("/users/instructors_courses")
+    public ResponseEntity<?> getInstructorsCourses () {
+        return ResponseEntity.ok(scheduleService.getInstructorsCourses());
+    }
 }

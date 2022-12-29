@@ -113,4 +113,24 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         return new MessageResponse(deletedCourse.getName()+" has deleted");
     }
+
+    @Override
+    public List<ScheduledCourseResponse> getInstructorsCourses() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long userId = ((UserDetailsImpl)authentication.getPrincipal()).getId();
+
+        User instructor = userRepository.getById(userId);
+        Department department = instructor.getDepartment();
+        Semester activeSemester = semesterRepository.findAllByIsActive(true).get(0);
+
+        List<Schedule> schedules = scheduleRepository.findAllByCourse_Instructors(instructor);
+        Map<Course, List<Schedule>> scheduleMap = schedules.stream().collect(Collectors.groupingBy(Schedule::getCourse));
+        List<ScheduledCourseResponse> scheduledCourseResponses = new ArrayList<>();
+        for (Course course : scheduleMap.keySet()) {
+            List<Schedule> groupedSchedules = scheduleMap.get(course);
+            scheduledCourseResponses.add(new ScheduledCourseResponse(course, groupedSchedules));
+        }
+
+        return scheduledCourseResponses;
+    }
 }
