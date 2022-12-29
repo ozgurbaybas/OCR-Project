@@ -8,12 +8,13 @@ import com.ozgurbaybas.OnlineCourseRegistration.Repository.CourseRepository;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.ScheduleRepository;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.SemesterRepository;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.UserRepository;
+import com.ozgurbaybas.OnlineCourseRegistration.Security.Services.UserDetailsImpl;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,7 +46,9 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public List<ScheduledCourseResponse> getOpenCourses(Long studentId) {
+    public List<ScheduledCourseResponse> getOpenCourses() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long studentId = ((UserDetailsImpl)authentication.getPrincipal()).getId();
         User student = userRepository.getById(studentId);
         Department department = student.getDepartment();
         Semester activeSemester = semesterRepository.findAllByIsActive(true).get(0);
@@ -57,6 +60,22 @@ public class ScheduleServiceImpl implements ScheduleService {
             scheduledCourseResponses.add(new ScheduledCourseResponse(course, groupedSchedules));
         }
         return scheduledCourseResponses;
+    }
+
+    @Override
+    public ScheduledCourseResponse registerToCourse(Long courseId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long studentId = ((UserDetailsImpl)authentication.getPrincipal()).getId();
+        User student = userRepository.getById(studentId);
+        Course selectedCourse = courseRepository.getById(courseId);
+        Set<Course> courseSet = new HashSet<>();
+        courseSet.add(selectedCourse);
+        student.setStudentsCourses(courseSet);
+        userRepository.save(student);
+        //selectedCourse.getStudents().add(student);
+        //courseRepository.save(selectedCourse);
+        List<Schedule> scheduleList = new ArrayList<>(selectedCourse.getSchedules());
+        return new ScheduledCourseResponse(selectedCourse,scheduleList);
     }
 
 }

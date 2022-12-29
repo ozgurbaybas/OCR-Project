@@ -86,6 +86,7 @@ public class CourseServiceImpl implements CourseService{
             instructorResponse = new InstructorResponse(inst.getId(), inst.getUsername());
             instructorResponseList.add(instructorResponse);
         }
+        //        List<InstructorResponse> instructorResponseList = instructorList.stream().map(inst -> new InstructorResponse(inst.getId(), inst.getUsername())).collect(Collectors.toList());
         courseRepository.save(course);
         return new CourseResponse(course, instructorResponseList);
     }

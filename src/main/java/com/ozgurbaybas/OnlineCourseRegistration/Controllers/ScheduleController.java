@@ -25,9 +25,15 @@ public class ScheduleController {
         return ResponseEntity.ok(scheduleService.assignCourseToSchedule(scheduleRequest));
     }
 
-    @PreAuthorize("hasRole('STUDENT') or hasRole('USER')")
-    @GetMapping("/users/{studentId}/open_courses")
-    public ResponseEntity<?> getOpenCourses (@PathVariable Long studentId) {
-        return ResponseEntity.ok(scheduleService.getOpenCourses(studentId));
+    @PreAuthorize("hasRole('STUDENT')")
+    @GetMapping("/users/open_courses")
+    public ResponseEntity<?> getOpenCourses () {
+        return ResponseEntity.ok(scheduleService.getOpenCourses());
+    }
+
+    @PreAuthorize("hasRole('STUDENT')")
+    @PutMapping("/users/register_course/{courseId}")
+    public ResponseEntity<?> registerToCourse (@PathVariable Long courseId ) {
+        return ResponseEntity.ok(scheduleService.registerToCourse(courseId));
     }
 }
