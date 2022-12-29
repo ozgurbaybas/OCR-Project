@@ -2,6 +2,7 @@ package com.ozgurbaybas.OnlineCourseRegistration.Services;
 
 import com.ozgurbaybas.OnlineCourseRegistration.Models.*;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Request.ScheduleRequest;
+import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.MessageResponse;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.ScheduleResponse;
 import com.ozgurbaybas.OnlineCourseRegistration.Payload.Response.ScheduledCourseResponse;
 import com.ozgurbaybas.OnlineCourseRegistration.Repository.CourseRepository;
@@ -68,7 +69,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         Long studentId = ((UserDetailsImpl)authentication.getPrincipal()).getId();
         User student = userRepository.getById(studentId);
         Course selectedCourse = courseRepository.getById(courseId);
-        Set<Course> courseSet = new HashSet<>();
+        Set<Course> courseSet = student.getStudentsCourses();
         courseSet.add(selectedCourse);
         student.setStudentsCourses(courseSet);
         userRepository.save(student);
@@ -78,4 +79,38 @@ public class ScheduleServiceImpl implements ScheduleService {
         return new ScheduledCourseResponse(selectedCourse,scheduleList);
     }
 
+    @Override
+    public List<ScheduledCourseResponse> getRegisteredCourses() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long studentId = ((UserDetailsImpl)authentication.getPrincipal()).getId();
+
+        User student = userRepository.getById(studentId);
+        Department department = student.getDepartment();
+        Semester activeSemester = semesterRepository.findAllByIsActive(true).get(0);
+
+        List<Schedule> schedules = scheduleRepository.findAllByCourse_Students(student);
+        Map<Course, List<Schedule>> scheduleMap = schedules.stream().collect(Collectors.groupingBy(Schedule::getCourse));
+        List<ScheduledCourseResponse> scheduledCourseResponses = new ArrayList<>();
+        for (Course course : scheduleMap.keySet()) {
+            List<Schedule> groupedSchedules = scheduleMap.get(course);
+            scheduledCourseResponses.add(new ScheduledCourseResponse(course, groupedSchedules));
+        }
+
+        return scheduledCourseResponses;
+    }
+
+    @Override
+    public MessageResponse dropCourse(Long courseId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long studentId = ((UserDetailsImpl)authentication.getPrincipal()).getId();
+
+        User student = userRepository.getById(studentId);
+        Course deletedCourse = courseRepository.getById(courseId);
+        Set<Course> courseSet = student.getStudentsCourses();
+        courseSet.remove(deletedCourse);
+        student.setStudentsCourses(courseSet);
+        userRepository.save(student);
+
+        return new MessageResponse(deletedCourse.getName()+" has deleted");
+    }
 }
